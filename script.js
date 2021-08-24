@@ -43,19 +43,28 @@ class EnglishText {
 
         return morseTextArr.join(' / ')
     }
+}
 
-    getKeyByValue(value) {
-        return Object.keys(this).find(key => this[key] === value) //where object = this
+class MorseText extends EnglishText {
+    constructor(text) {
+        super(text)
+    }
+
+    getEnglishTranslation() {
+        const morseWordsArr = this.text.split(' / ')
+        let englishWordsArr = morseWordsArr.map((morseWord) => {
+            let morseLetters = morseWord.split(' ')
+            let englishLetters = morseLetters.map((morseLetter) => {
+                return Object.keys(this).find(englishLetter => this[englishLetter] === morseLetter)
+            })
+            return englishLetters.join('')
+        })
+
+        return englishWordsArr.join(" ")
     }
 }
 
 const test = new EnglishText("cab a bed")
+const morseTest = new MorseText("-.-. .- -")
 
-console.log(test.getKeyByValue("."))
-
-// let translatedWord = []
-// for (let i = 0; i < this.text.length; i++) {
-//     let letter = this.text.charAt(i)
-//     translatedWord.push(this[letter])
-// }
-// return translatedWord.join(" ")
+console.log(morseTest.getEnglishTranslation())
