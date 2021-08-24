@@ -27,6 +27,7 @@ class EnglishText {
         this.x = "-..-"
         this.y = "-.--"
         this.z = "--.."
+        this.fullStop = ".-.-.-"
     }
 
     getMorseTranslation() {
@@ -36,7 +37,11 @@ class EnglishText {
             let morseWord = []
             for(let i = 0; i < englishWord.length; i++) {
                 let letter = englishWord.charAt(i)
-                morseWord.push(this[letter])
+                if (letter === ".") {
+                    morseWord.push(this.fullStop)
+                } else {
+                    morseWord.push(this[letter])
+                }
             }
             return morseWord.join(' ')
         })
@@ -55,7 +60,11 @@ class MorseText extends EnglishText {
         let englishWordsArr = morseWordsArr.map((morseWord) => {
             let morseLetters = morseWord.split(' ')
             let englishLetters = morseLetters.map((morseLetter) => {
-                return Object.keys(this).find(englishLetter => this[englishLetter] === morseLetter)
+                if (morseLetter === ".-.-.-") {
+                    return "."
+                } else {
+                    return Object.keys(this).find(englishLetter => this[englishLetter] === morseLetter)
+                }
             })
             return englishLetters.join('')
         })
@@ -64,7 +73,19 @@ class MorseText extends EnglishText {
     }
 }
 
-const test = new EnglishText("cab a bed")
-const morseTest = new MorseText("-.-. .- -")
+document.addEventListener('DOMContentLoaded', () => {
 
-console.log(morseTest.getEnglishTranslation())
+    let englishText = document.querySelector("#english-text")
+    let morseText = document.querySelector("#morse-text")
+
+    englishText.addEventListener("keyup", (event) => {
+        let englishSentence = new EnglishText(`${englishText.value}`)
+        morseText.value = englishSentence.getMorseTranslation()
+    })
+
+    morseText.addEventListener("keyup", (event) => {
+        let morseSentence = new MorseText(`${morseText.value}`)
+        englishText.value = morseSentence.getEnglishTranslation()
+    })
+    
+})
