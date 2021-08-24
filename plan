@@ -1,0 +1,55 @@
+classes include the english alphabet, morse alphabet, the word to translate and possibly running output
+
+methods MAY include how to add a word to translate, how to break it down to aid translation
+
+Key value pairs stored in the objects:
+- this.a: -.-
+- this.b: ..-
+etc....
+
+
+Translating to morse:
+
+Class takes a string. Then methods:
+- Use string.split to store as an array
+- const morseArr = Array.map((word) => {
+    translatedWord = ""
+    for (var index = 0; i < word.length; i++) {
+        translatedWord += this.word[i]  // may need to use square bracket notation instead of dot notation
+    }
+    return translatedWord
+}
+
+return morseArr.join('/')
+
+Translating to english:
+- Use string.split('/') to store as an array of morse words
+- englishArr = array.map(word) {
+    letters = word.split(' ') // for each word, get an array of morse letters
+    translatedLetters = letters.map(letter) { // return an array of english letters for each word
+        return the english for the letter
+    }
+    return translatedLetters.join('') // return the string to produce an array of english words
+}
+- return englishArr.join(" ") //return a string sentence in english
+
+
+function getKeyByValue(value) {
+    return Object.keys(this).find(key => this[key] === value) //where object = this
+}
+
+
+class EnglishText {
+    constructor(englishSentence)
+    this.englishSentence = englishSentence
+
+    englishToMorse()
+}
+
+class MorseText extends EnglishText {
+    constructor(englishSentence, morseSentence)
+    super(englishSentence)
+    this.morseSentence = morseSentence
+
+    morseToEnglish()
+}
